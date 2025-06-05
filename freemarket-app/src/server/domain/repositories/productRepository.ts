@@ -12,6 +12,6 @@ export interface ProductSearchCriteria {
 export interface ProductRepository {
 	findById(id: ProductId): Promise<ProductEntity | null>;
 	findByCriteria(criteria: ProductSearchCriteria): Promise<ProductEntity[]>;
-	save(product: ProductEntity): Promise<ProductEntity[]>;
+	save(product: ProductEntity): Promise<void>;
 	delete(id: ProductId): Promise<void>;
 }

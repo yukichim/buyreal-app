@@ -5,7 +5,10 @@ import {
 	type Product,
 	type ProductId,
 } from "~/server/domain/entities/product";
-import type { ProductRepository } from "~/server/domain/repositories/productRepository";
+import type {
+	ProductRepository,
+	ProductSearchCriteria,
+} from "~/server/domain/repositories/productRepository";
 
 export class TrpcProductRepository implements ProductRepository {
 	private products: Map<string, ProductEntity> = new Map();
@@ -76,5 +79,61 @@ export class TrpcProductRepository implements ProductRepository {
 	}
 	async findById(id: ProductId): Promise<ProductEntity | null> {
 		return this.products.get(id.value) || null;
+	}
+
+	async findByCriteria(
+		criteria: ProductSearchCriteria,
+	): Promise<ProductEntity[]> {
+		const products = Array.from(this.products.values());
+
+		return products.filter((product) => {
+			const productData = product.toPlainObject();
+
+			if (criteria.keyword) {
+				const keyword = criteria.keyword.toLowerCase();
+				if (
+					!productData.title.toLowerCase().includes(keyword) &&
+					!productData.description.toLowerCase().includes(keyword)
+				) {
+					return false;
+				}
+			}
+
+			if (
+				criteria.categoryId &&
+				productData.categoryId !== criteria.categoryId
+			) {
+				return false;
+			}
+
+			if (criteria.minPrice && productData.price.amount < criteria.minPrice) {
+				return false;
+			}
+
+			if (criteria.maxPrice && productData.price.amount > criteria.maxPrice) {
+				return false;
+			}
+
+			if (criteria.condition && productData.condition !== criteria.condition) {
+				return false;
+			}
+
+			if (
+				criteria.sellerId &&
+				productData.sellerId.value !== criteria.sellerId.value
+			) {
+				return false;
+			}
+
+			return true;
+		});
+	}
+
+	async save(product: ProductEntity): Promise<void> {
+		this.products.set(product.getId().value, product);
+	}
+
+	async delete(id: ProductId): Promise<void> {
+		this.products.delete(id.value);
 	}
 }
