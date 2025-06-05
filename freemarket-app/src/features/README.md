@@ -1,0 +1,20 @@
+https://zenn.dev/akfm/books/nextjs-basic-principle/viewer/part_2_container_1st_design
+
+
+Composition パターンでクライアントコンポーネントを実装
+
+- Composition Pattern
+クライアントコンポーネントの子要素にサーバコンポーネントが配置されること
+
+※テスト容易性の観点
+- データ取得はContainer Components、データ参照はPresentational Componentsに分離
+Container／Presentationalパターン
+
+- Presentational Componentsはフェッチを含まないSharedComponentsやClientComponents
+
+# ContainerComponentsでのみ画面設計を行い、PresentationalComponentsは後から実装するContainer 1stな設計手法で設計する
+- 本アプリ構成では、_containersのindex.tsxでContainerComponentsの公開を行うアーキテクチャとしています。
+
+メモ
+- Client Componentsはサーバモジュールをインポートできない
+→ServerActionsのみ許容される
