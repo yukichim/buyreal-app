@@ -74,7 +74,17 @@ export class CreateProductInputData {
 	}
 }
 
-export class CreateProductUseCase {
+/**
+ * 商品登録のユースケース
+ */
+interface CreateProductUseCase {
+	execute(request: CreateProductInputData): Promise<ProductEntity>;
+}
+
+/**
+ * ユースケースの実装クラス
+ */
+export class CreateProductUseCaseInteractor implements CreateProductUseCase {
 	constructor(private productRepository: ProductRepository) {}
 
 	async execute(request: CreateProductInputData): Promise<ProductEntity> {
