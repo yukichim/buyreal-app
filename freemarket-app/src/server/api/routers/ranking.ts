@@ -1,9 +1,14 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { router, publicProcedure } from "../trpc";
+import { InMemoryCategoryRankingRepository } from "~/infrastcutrure/repositories/inMemoryCategoryRankingRepository";
+import {
+	GetCategoryRankingUseCaseInputData,
+	GetCategoryRankingUseCaseInteractor,
+} from "~/application/usecase/ranking/getCategoryRanking";
 
 const categoryRankingRepository = new InMemoryCategoryRankingRepository();
 
-export const rankingRouter = createTRPCRouter({
+export const rankingRouter = router({
 	getCategories: publicProcedure
 		.input(
 			z.object({
@@ -11,8 +16,11 @@ export const rankingRouter = createTRPCRouter({
 			}),
 		)
 		.query(async ({ input }) => {
-			const useCase = new GetCategoryRankingUseCase(categoryRankingRepository);
-			const rankings = await useCase.execute(input.limit);
+			const useCase = new GetCategoryRankingUseCaseInteractor(
+				categoryRankingRepository,
+			);
+			const inputData = new GetCategoryRankingUseCaseInputData(input.limit);
+			const rankings = await useCase.execute(inputData);
 			return rankings.map((ranking) => ranking.toPlainObject());
 		}),
 });

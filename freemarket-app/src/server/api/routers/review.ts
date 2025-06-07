@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter as router, publicProcedure } from "../trpc";
+import { router, publicProcedure } from "../trpc";
 import { TrpcReviewRepository } from "../repository/trpcReviewRepository";
 import { CreateReviewUseCaseInteractor } from "~/application/usecase/review/createReviewUsecase";
 import {

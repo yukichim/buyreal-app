@@ -1,12 +1,16 @@
 import { z } from "zod";
-import { createTRPCRouter as router, publicProcedure } from "../trpc";
+import { router, publicProcedure } from "../trpc";
 import { ProductCondition } from "~/domain/entities/product";
 import { TrpcProductRepository } from "../repository/trpcProductRepository";
 import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
-import { CreateProductUseCaseInteractor } from "~/application/usecase/product/createProductUsecase";
+import {
+	CreateProductInputData,
+	CreateProductUseCaseInteractor,
+} from "~/application/usecase/product/createProductUsecase";
 import { PurchaseProductUseCaseInteractor } from "~/application/usecase/product/purchaseProductUsecase";
 import { SearchProductsUseCaseInteractor } from "~/application/usecase/product/searchProductsUsecase";
 import { AddStampUseCaseInteractor } from "~/application/usecase/stampCard/addStampUsecase";
+import type { ProductSearchCriteria } from "~/domain/repositories/productRepository";
 
 const productRepository = new TrpcProductRepository();
 const stampCardRepository = new TrpcStampCardRepository();
@@ -24,7 +28,10 @@ export const productRouter = router({
 		)
 		.query(async ({ input }) => {
 			const useCase = new SearchProductsUseCaseInteractor(productRepository);
-			const products = await useCase.execute(input);
+			const inputData: ProductSearchCriteria = {
+				sellerId: { value: "" },
+			};
+			const products = await useCase.execute(inputData);
 			return products.map((product) => product.toPlainObject());
 		}),
 
@@ -42,7 +49,8 @@ export const productRouter = router({
 		)
 		.mutation(async ({ input }) => {
 			const useCase = new CreateProductUseCaseInteractor(productRepository);
-			const product = await useCase.execute(input);
+			const inputData = new CreateProductInputData(input);
+			const product = await useCase.execute(inputData);
 			return product.toPlainObject();
 		}),
 

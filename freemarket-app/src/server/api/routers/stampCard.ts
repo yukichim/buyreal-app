@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { router, publicProcedure } from "../trpc";
 import {
 	GetStampCardUseCaseInputData,
 	GetStampCardUseCaseInteractor,
@@ -12,7 +12,7 @@ import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
 
 const stampCardRepository = new TrpcStampCardRepository();
 
-export const stampCardRouter = createTRPCRouter({
+export const stampCardRouter = router({
 	get: publicProcedure
 		.input(
 			z.object({
