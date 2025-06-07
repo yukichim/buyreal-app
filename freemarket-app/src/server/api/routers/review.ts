@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TrpcReviewRepository } from "../repository/trpcReviewRepository";
 import { CreateReviewUseCaseInteractor } from "~/application/usecase/review/createReviewUsecase";
 import {
@@ -9,7 +9,7 @@ import {
 
 const reviewRepository = new TrpcReviewRepository();
 
-export const reviewRouter = router({
+export const reviewRouter = createTRPCRouter({
 	create: publicProcedure
 		.input(
 			z.object({

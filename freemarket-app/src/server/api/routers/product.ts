@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 import { ProductCondition } from "~/domain/entities/product";
 import { TrpcProductRepository } from "../repository/trpcProductRepository";
 import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
@@ -15,7 +15,7 @@ import type { ProductSearchCriteria } from "~/domain/repositories/productReposit
 const productRepository = new TrpcProductRepository();
 const stampCardRepository = new TrpcStampCardRepository();
 
-export const productRouter = router({
+export const productRouter = createTRPCRouter({
 	search: publicProcedure
 		.input(
 			z.object({

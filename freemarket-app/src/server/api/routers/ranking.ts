@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 import { InMemoryCategoryRankingRepository } from "~/infrastcutrure/repositories/inMemoryCategoryRankingRepository";
 import {
 	GetCategoryRankingUseCaseInputData,
@@ -8,7 +8,7 @@ import {
 
 const categoryRankingRepository = new InMemoryCategoryRankingRepository();
 
-export const rankingRouter = router({
+export const rankingRouter = createTRPCRouter({
 	getCategories: publicProcedure
 		.input(
 			z.object({
