@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CategoryFilterPresentation } from "./categoryFilterPresentational";
 
 const categories = [
 	{ id: "electrics", name: "家電・スマホ・カメラ" },
@@ -23,5 +24,13 @@ export function CategoryFilterContainer() {
 		console.log("選択されたカテゴリー：", selectedCategories);
 	};
 
-	return <></>;
+	return (
+		<>
+			<CategoryFilterPresentation
+				categories={categories}
+				onCategoryChange={handleCategoryChange}
+				selectedCategories={selectedCategories}
+			/>
+		</>
+	);
 }
