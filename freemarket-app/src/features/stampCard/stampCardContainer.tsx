@@ -31,7 +31,7 @@ export function StampCardContainer() {
 			stampCard={stampCard}
 			loading={isLoading}
 			onUseReward={handleUseReward}
-			usingReward={useRewardMutation.isLoading}
+			usingReward={isLoading}
 		/>
 	);
 }

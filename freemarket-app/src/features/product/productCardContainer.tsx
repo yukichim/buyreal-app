@@ -1,8 +1,8 @@
 "use client";
 
+import type { ProductEntity } from "~/domain/entities/product";
 import { ProductCardPresentation } from "./productCardPresentation";
 import { trpc } from "~/lib/trpc";
-import type { ProductEntity } from "~/domain/entities/product";
 
 interface ProductCardContainerProps {
 	product: ProductEntity;
@@ -33,7 +33,7 @@ export function ProductCardContainer({
 	return (
 		<ProductCardPresentation
 			product={product}
-			purchasing={purchaseMutation.isLoading}
+			purchasing={purchaseMutation.isPending}
 			onPurchase={handlePurchase}
 		/>
 	);
