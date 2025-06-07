@@ -4,11 +4,11 @@ import {
 	ProductStatus,
 	type Product,
 	type ProductId,
-} from "~/server/domain/entities/product";
+} from "~/domain/entities/product";
 import type {
 	ProductRepository,
 	ProductSearchCriteria,
-} from "~/server/domain/repositories/productRepository";
+} from "~/domain/repositories/productRepository";
 
 export class TrpcProductRepository implements ProductRepository {
 	private products: Map<string, ProductEntity> = new Map();

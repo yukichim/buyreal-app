@@ -1,5 +1,8 @@
-import type { StampCardRepository } from "~/domain/repositories/stamp-card-repository";
-import { StampCardEntity, type StampCard } from "~/domain/entities/stamp-card";
+import type { StampCardRepository } from "~/domain/repositories/stampCardRepository";
+import {
+	StampCardEntity,
+	type StampCard,
+} from "~/domain/entities/stampCardEntity";
 
 export class TrpcStampCardRepository implements StampCardRepository {
 	private stampCards: Map<string, StampCardEntity> = new Map();

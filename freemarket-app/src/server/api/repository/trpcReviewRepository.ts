@@ -1,4 +1,4 @@
-import type { ReviewRepository } from "~/domain/repositories/review-repository";
+import type { ReviewRepository } from "~/domain/repositories/reviewRepository";
 import {
 	ReviewEntity,
 	type ReviewId,

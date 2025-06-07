@@ -1,8 +1,11 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
-import { CreateReviewUseCase } from "~/application/use-cases/review/create-review-use-case";
-import { GetReviewTimelineUseCase } from "~/application/use-cases/review/get-review-timeline-use-case";
-import { TrpcReviewRepository } from "../repositories/trpc-review-repository";
+import { createTRPCRouter as router, publicProcedure } from "../trpc";
+import { TrpcReviewRepository } from "../repository/trpcReviewRepository";
+import { CreateReviewUseCaseInteractor } from "~/application/usecase/review/createReviewUsecase";
+import {
+	GetReviewTimelineUseCaseInputData,
+	GetReviewTimelineUseCaseInteractor,
+} from "~/application/usecase/review/getReviewTimelineUsecase";
 
 const reviewRepository = new TrpcReviewRepository();
 
@@ -20,7 +23,7 @@ export const reviewRouter = router({
 			}),
 		)
 		.mutation(async ({ input }) => {
-			const useCase = new CreateReviewUseCase(reviewRepository);
+			const useCase = new CreateReviewUseCaseInteractor(reviewRepository);
 			const review = await useCase.execute(input);
 			return review.toPlainObject();
 		}),
@@ -32,8 +35,9 @@ export const reviewRouter = router({
 			}),
 		)
 		.query(async ({ input }) => {
-			const useCase = new GetReviewTimelineUseCase(reviewRepository);
-			const reviews = await useCase.execute(input.limit);
+			const useCase = new GetReviewTimelineUseCaseInteractor(reviewRepository);
+			const inputData = new GetReviewTimelineUseCaseInputData(input.limit);
+			const reviews = await useCase.execute(inputData);
 			return reviews.map((review) => review.toPlainObject());
 		}),
 });

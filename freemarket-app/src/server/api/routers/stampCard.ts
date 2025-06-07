@@ -1,12 +1,18 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
-import { GetStampCardUseCase } from "@/application/use-cases/stamp-card/get-stamp-card-use-case";
-import { UseRewardUseCase } from "@/application/use-cases/stamp-card/use-reward-use-case";
-import { TrpcStampCardRepository } from "../repositories/trpc-stamp-card-repository";
+import { createTRPCRouter, publicProcedure } from "../trpc";
+import {
+	GetStampCardUseCaseInputData,
+	GetStampCardUseCaseInteractor,
+} from "~/application/usecase/stampCard/getStampUsecase";
+import {
+	UseRewardUseCaseInputData,
+	UseRewardUseCaseInteractor,
+} from "~/application/usecase/stampCard/useRewardUsecase";
+import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
 
 const stampCardRepository = new TrpcStampCardRepository();
 
-export const stampCardRouter = router({
+export const stampCardRouter = createTRPCRouter({
 	get: publicProcedure
 		.input(
 			z.object({
@@ -14,8 +20,9 @@ export const stampCardRouter = router({
 			}),
 		)
 		.query(async ({ input }) => {
-			const useCase = new GetStampCardUseCase(stampCardRepository);
-			const stampCard = await useCase.execute(input.userId);
+			const useCase = new GetStampCardUseCaseInteractor(stampCardRepository);
+			const inputData = new GetStampCardUseCaseInputData(input.userId);
+			const stampCard = await useCase.execute(inputData);
 			return stampCard.toPlainObject();
 		}),
 
@@ -26,8 +33,9 @@ export const stampCardRouter = router({
 			}),
 		)
 		.mutation(async ({ input }) => {
-			const useCase = new UseRewardUseCase(stampCardRepository);
-			await useCase.execute(input.userId);
+			const useCase = new UseRewardUseCaseInteractor(stampCardRepository);
+			const inputData = new UseRewardUseCaseInputData(input.userId);
+			await useCase.execute(inputData);
 			return { success: true };
 		}),
 });

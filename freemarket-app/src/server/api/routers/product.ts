@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
-import { SearchProductsUseCase } from "@/application/use-cases/product/search-products-use-case";
-import { CreateProductUseCase } from "@/application/use-cases/product/create-product-use-case";
-import { PurchaseProductUseCase } from "@/application/use-cases/product/purchase-product-use-case";
-import { AddStampUseCase } from "@/application/use-cases/stamp-card/add-stamp-use-case";
-import { TrpcProductRepository } from "../repositories/trpc-product-repository";
-import { TrpcStampCardRepository } from "../repositories/trpc-stamp-card-repository";
-import { ProductCondition } from "@/domain/entities/product";
+import { createTRPCRouter as router, publicProcedure } from "../trpc";
+import { ProductCondition } from "~/domain/entities/product";
+import { TrpcProductRepository } from "../repository/trpcProductRepository";
+import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
+import { CreateProductUseCaseInteractor } from "~/application/usecase/product/createProductUsecase";
+import { PurchaseProductUseCaseInteractor } from "~/application/usecase/product/purchaseProductUsecase";
+import { SearchProductsUseCaseInteractor } from "~/application/usecase/product/searchProductsUsecase";
+import { AddStampUseCaseInteractor } from "~/application/usecase/stampCard/addStampUsecase";
 
 const productRepository = new TrpcProductRepository();
 const stampCardRepository = new TrpcStampCardRepository();
@@ -23,7 +23,7 @@ export const productRouter = router({
 			}),
 		)
 		.query(async ({ input }) => {
-			const useCase = new SearchProductsUseCase(productRepository);
+			const useCase = new SearchProductsUseCaseInteractor(productRepository);
 			const products = await useCase.execute(input);
 			return products.map((product) => product.toPlainObject());
 		}),
@@ -41,7 +41,7 @@ export const productRouter = router({
 			}),
 		)
 		.mutation(async ({ input }) => {
-			const useCase = new CreateProductUseCase(productRepository);
+			const useCase = new CreateProductUseCaseInteractor(productRepository);
 			const product = await useCase.execute(input);
 			return product.toPlainObject();
 		}),
@@ -54,8 +54,12 @@ export const productRouter = router({
 			}),
 		)
 		.mutation(async ({ input }) => {
-			const purchaseUseCase = new PurchaseProductUseCase(productRepository);
-			const addStampUseCase = new AddStampUseCase(stampCardRepository);
+			const purchaseUseCase = new PurchaseProductUseCaseInteractor(
+				productRepository,
+			);
+			const addStampUseCase = new AddStampUseCaseInteractor(
+				stampCardRepository,
+			);
 
 			await purchaseUseCase.execute(input);
 			await addStampUseCase.execute(input.buyerId);
