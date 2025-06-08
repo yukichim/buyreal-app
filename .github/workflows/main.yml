@@ -27,7 +27,7 @@ jobs:
           AUTH_SECRET: "xxx"
           AUTH_DISCORD_ID: "xxx"
           AUTH_DISCORD_SECRET: "xxx"
-          DATABASE_URL: ${{env.DATSBASE_URL}}
+          DATABASE_URL: ${{ env.DATSBASE_URL }}
 
 
       - name: Deploy to Vercel
