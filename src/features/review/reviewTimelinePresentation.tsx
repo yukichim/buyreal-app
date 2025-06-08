@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Star, MessageCircle } from "lucide-react";
-import type { ReviewEntity } from "~/domain/entities/review";
+import type { ReviewEntity } from "~/server/domain/entities/review";
 
 interface ReviewTimelinePresentationProps {
 	reviews: ReviewEntity[];

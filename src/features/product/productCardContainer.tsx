@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProductEntity } from "~/domain/entities/product";
+import type { ProductEntity } from "~/server/domain/entities/product";
 import { ProductCardPresentation } from "./productCardPresentation";
 import { trpc } from "~/lib/trpc";
 

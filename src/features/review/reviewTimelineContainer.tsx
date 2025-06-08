@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { trpc } from "~/lib/trpc";
-import { ReviewEntity } from "~/domain/entities/review";
+import { ReviewEntity } from "~/server/domain/entities/review";
 import { ReviewTimelinePresentation } from "./reviewTimelinePresentation";
 
 export function ReviewTimelineContainer() {

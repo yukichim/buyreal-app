@@ -1,10 +1,8 @@
 "use client";
 
-import { ProductEntity } from "~/domain/entities/product";
-import type { ProductCondition } from "~/domain/entities/product";
+import { ProductEntity } from "~/server/domain/entities/product";
 import { ProductListPresentation } from "./productListPresentation";
 import { trpc } from "~/lib/trpc";
-import { useState } from "react";
 
 export function ProductListContainer() {
 	const {

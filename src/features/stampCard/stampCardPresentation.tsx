@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { Gift, Star } from "lucide-react";
-import type { StampCard } from "~/domain/entities/stampCardEntity";
+import type { StampCard } from "~/server/domain/entities/stampCardEntity";
 
 interface StampCardPresentationProps {
 	stampCard?: StampCard;

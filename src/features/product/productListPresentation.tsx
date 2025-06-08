@@ -1,5 +1,5 @@
 import { ProductCardContainer } from "./productCardContainer";
-import type { ProductEntity } from "~/domain/entities/product";
+import type { ProductEntity } from "~/server/domain/entities/product";
 
 interface ProductListPresentationProps {
 	products: ProductEntity[];

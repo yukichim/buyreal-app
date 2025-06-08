@@ -2,7 +2,7 @@
 
 import { CategoryRankingPresentation } from "./categoryRankingPresentation";
 import { trpc } from "~/lib/trpc";
-import { CategoryRankingEntity } from "~/domain/entities/categoryRanking";
+import { CategoryRankingEntity } from "~/server/domain/entities/categoryRanking";
 
 export function CategoryRankingContainer() {
 	const { data: rankings = [], isLoading } =

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
 import { TrendingUp } from "lucide-react";
-import type { CategoryRankingEntity } from "~/domain/entities/categoryRanking";
+import type { CategoryRankingEntity } from "~/server/domain/entities/categoryRanking";
 
 interface CategoryRankingPresentationProps {
 	rankings: CategoryRankingEntity[];

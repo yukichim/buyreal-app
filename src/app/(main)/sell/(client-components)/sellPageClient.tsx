@@ -14,7 +14,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "~/components/ui/select";
-import { ProductCondition } from "~/domain/entities/product";
+import { ProductCondition } from "~/server/domain/entities/product";
 import { trpc } from "~/lib/trpc";
 
 export default function SellPageClient() {

@@ -13,7 +13,7 @@ import {
 	type ProductEntity,
 	ProductStatus,
 	ProductCondition,
-} from "~/domain/entities/product";
+} from "~/server/domain/entities/product";
 
 interface ProductCardPresentationProps {
 	product: ProductEntity;
