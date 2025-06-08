@@ -23,6 +23,11 @@ jobs:
 
       - name: Build Next.js project
         run: npm run build
+        env:
+          AUTH_DISCORD_ID: "xxx"
+          AUTH_DISCORD_SECRET: "xxx"
+          DATABASE_URL: "postgresql://postgres:postgres@192.168.64.4:5432/postgres?search_path=public"
+
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25 # deploy to Vercel
