@@ -29,7 +29,8 @@
 		"paths": {
 			"~/*": ["./src/*"],
 			"@/*": ["./src/*"]
-		}
+		},
+		"types": ["vitest/globals"]
 	},
 	"include": [
 		"next-env.d.ts",
@@ -39,5 +40,5 @@
 		"**/*.js",
 		".next/types/**/*.ts"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "coverage"]
 }
