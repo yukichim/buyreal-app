@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TrpcReviewRepository } from "../repository/trpcReviewRepository";
-import { CreateReviewUseCaseInteractor } from "~/application/usecase/review/createReviewUsecase";
+import { CreateReviewUseCaseInteractor } from "~/server/application/usecase/review/createReviewUsecase";
 import {
 	GetReviewTimelineUseCaseInputData,
 	GetReviewTimelineUseCaseInteractor,
-} from "~/application/usecase/review/getReviewTimelineUsecase";
+} from "~/server/application/usecase/review/getReviewTimelineUsecase";
 
 const reviewRepository = new TrpcReviewRepository();
 

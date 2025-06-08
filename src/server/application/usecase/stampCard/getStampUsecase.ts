@@ -1,5 +1,5 @@
-import type { StampCardRepository } from "~/domain/repositories/stampCardRepository";
-import type { StampCardEntity } from "~/domain/entities/stampCardEntity";
+import type { StampCardRepository } from "~/server/domain/repositories/stampCardRepository";
+import type { StampCardEntity } from "~/server/domain/entities/stampCardEntity";
 
 export class GetStampCardUseCaseInputData {
 	constructor(private userId: string) {

@@ -1,13 +1,13 @@
 import {
 	GetProductUseCaseInputData,
 	type GetProductUseCase,
-} from "~/application/usecase/product/getProductUsecase";
+} from "~/server/application/usecase/product/getProductUsecase";
 import type {
 	Money,
 	ProductCondition,
 	ProductEntity,
 	ProductStatus,
-} from "~/domain/entities/product";
+} from "~/server/domain/entities/product";
 
 export type ResponseGetByPage = {
 	id: string;

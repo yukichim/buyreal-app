@@ -1,8 +1,8 @@
 import {
 	CategoryRankingEntity,
 	type CategoryRanking,
-} from "~/domain/entities/categoryRanking";
-import type { CategoryRankingRepository } from "~/domain/repositories/categoryRankingRepository";
+} from "~/server/domain/entities/categoryRanking";
+import type { CategoryRankingRepository } from "~/server/domain/repositories/categoryRankingRepository";
 
 export class InMemoryCategoryRankingRepository
 	implements CategoryRankingRepository

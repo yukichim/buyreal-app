@@ -1,5 +1,5 @@
-import type { ProductEntity } from "~/domain/entities/product";
-import type { ProductRepository } from "~/domain/repositories/productRepository";
+import type { ProductEntity } from "~/server/domain/entities/product";
+import type { ProductRepository } from "~/server/domain/repositories/productRepository";
 
 interface GetProductUseCaseInpputType {
 	limit?: number;

@@ -1,5 +1,5 @@
-import type { ReviewRepository } from "~/domain/repositories/reviewRepository";
-import { ReviewEntity, type Review } from "~/domain/entities/review";
+import type { ReviewRepository } from "~/server/domain/repositories/reviewRepository";
+import { ReviewEntity, type Review } from "~/server/domain/entities/review";
 
 export interface CreateReviewRequest {
 	productId: string;

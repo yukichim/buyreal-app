@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { InMemoryCategoryRankingRepository } from "~/infrastcutrure/repositories/inMemoryCategoryRankingRepository";
+import { InMemoryCategoryRankingRepository } from "~/server/infrastcutrure/repositories/inMemoryCategoryRankingRepository";
 import {
 	GetCategoryRankingUseCaseInputData,
 	GetCategoryRankingUseCaseInteractor,
-} from "~/application/usecase/ranking/getCategoryRanking";
+} from "~/server/application/usecase/ranking/getCategoryRanking";
 
 const categoryRankingRepository = new InMemoryCategoryRankingRepository();
 

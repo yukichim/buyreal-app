@@ -1,8 +1,8 @@
 import type {
 	ProductRepository,
 	ProductSearchCriteria,
-} from "~/domain/repositories/productRepository";
-import type { ProductEntity } from "~/domain/entities/product";
+} from "~/server/domain/repositories/productRepository";
+import type { ProductEntity } from "~/server/domain/entities/product";
 
 interface SearchProductsUseCase {
 	execute(criteria: ProductSearchCriteria): Promise<ProductEntity[]>;

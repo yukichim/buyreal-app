@@ -1,20 +1,20 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { ProductCondition } from "~/domain/entities/product";
+import { ProductCondition } from "~/server/domain/entities/product";
 import { TrpcProductRepository } from "../repository/trpcProductRepository";
 import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
 import {
 	CreateProductInputData,
 	CreateProductUseCaseInteractor,
-} from "~/application/usecase/product/createProductUsecase";
-import { PurchaseProductUseCaseInteractor } from "~/application/usecase/product/purchaseProductUsecase";
-import { SearchProductsUseCaseInteractor } from "~/application/usecase/product/searchProductsUsecase";
-import { AddStampUseCaseInteractor } from "~/application/usecase/stampCard/addStampUsecase";
-import type { ProductSearchCriteria } from "~/domain/repositories/productRepository";
+} from "~/server/application/usecase/product/createProductUsecase";
+import { PurchaseProductUseCaseInteractor } from "~/server/application/usecase/product/purchaseProductUsecase";
+import { SearchProductsUseCaseInteractor } from "~/server/application/usecase/product/searchProductsUsecase";
+import { AddStampUseCaseInteractor } from "~/server/application/usecase/stampCard/addStampUsecase";
+import type { ProductSearchCriteria } from "~/server/domain/repositories/productRepository";
 import {
 	GetProductUseCaseInputData,
 	GetProductUseCaseInteractor,
-} from "~/application/usecase/product/getProductUsecase";
+} from "~/server/application/usecase/product/getProductUsecase";
 
 const productRepository = new TrpcProductRepository();
 const stampCardRepository = new TrpcStampCardRepository();

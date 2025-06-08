@@ -1,5 +1,5 @@
-import type { ProductRepository } from "~/domain/repositories/productRepository";
-import type { ProductId } from "~/domain/entities/product";
+import type { ProductRepository } from "~/server/domain/repositories/productRepository";
+import type { ProductId } from "~/server/domain/entities/product";
 
 export interface PurchaseProductRequest {
 	productId: string;

@@ -1,5 +1,5 @@
-import type { CategoryRankingRepository } from "~/domain/repositories/categoryRankingRepository";
-import type { CategoryRankingEntity } from "~/domain/entities/categoryRanking";
+import type { CategoryRankingRepository } from "~/server/domain/repositories/categoryRankingRepository";
+import type { CategoryRankingEntity } from "~/server/domain/entities/categoryRanking";
 
 export class GetCategoryRankingUseCaseInputData {
 	constructor(private limit: number) {

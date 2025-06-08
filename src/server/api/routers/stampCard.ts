@@ -3,11 +3,11 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 import {
 	GetStampCardUseCaseInputData,
 	GetStampCardUseCaseInteractor,
-} from "~/application/usecase/stampCard/getStampUsecase";
+} from "~/server/application/usecase/stampCard/getStampUsecase";
 import {
 	UseRewardUseCaseInputData,
 	UseRewardUseCaseInteractor,
-} from "~/application/usecase/stampCard/useRewardUsecase";
+} from "~/server/application/usecase/stampCard/useRewardUsecase";
 import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
 
 const stampCardRepository = new TrpcStampCardRepository();

@@ -1,9 +1,9 @@
-import type { ReviewRepository } from "~/domain/repositories/reviewRepository";
+import type { ReviewRepository } from "~/server/domain/repositories/reviewRepository";
 import {
 	ReviewEntity,
 	type ReviewId,
 	type Review,
-} from "~/domain/entities/review";
+} from "~/server/domain/entities/review";
 
 export class InMemoryReviewRepository implements ReviewRepository {
 	private reviews: Map<string, ReviewEntity> = new Map();

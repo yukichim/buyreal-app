@@ -1,5 +1,5 @@
-import type { ReviewRepository } from "~/domain/repositories/reviewRepository";
-import type { ReviewEntity } from "~/domain/entities/review";
+import type { ReviewRepository } from "~/server/domain/repositories/reviewRepository";
+import type { ReviewEntity } from "~/server/domain/entities/review";
 
 export class GetReviewTimelineUseCaseInputData {
 	constructor(private limit: number) {

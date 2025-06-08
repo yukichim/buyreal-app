@@ -1,4 +1,4 @@
-import type { StampCardRepository } from "~/domain/repositories/stampCardRepository";
+import type { StampCardRepository } from "~/server/domain/repositories/stampCardRepository";
 
 export class addStampUseCaseInputData {
 	constructor(private userId: string) {}

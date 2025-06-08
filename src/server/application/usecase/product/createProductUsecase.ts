@@ -1,10 +1,10 @@
-import type { ProductRepository } from "~/domain/repositories/productRepository";
+import type { ProductRepository } from "~/server/domain/repositories/productRepository";
 import {
 	ProductEntity,
 	type Product,
 	ProductStatus,
 	type ProductCondition,
-} from "~/domain/entities/product";
+} from "~/server/domain/entities/product";
 
 interface CreateProductRequest {
 	title: string;
