@@ -27,7 +27,7 @@ jobs:
           AUTH_SECRET: "xxx"
           AUTH_DISCORD_ID: "xxx"
           AUTH_DISCORD_SECRET: "xxx"
-          DATABASE_URL: ${{ env.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25 # deploy to Vercel
