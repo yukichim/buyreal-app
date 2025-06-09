@@ -8,6 +8,10 @@ import {
 	UseRewardUseCaseInputData,
 	UseRewardUseCaseInteractor,
 } from "~/server/application/usecase/stampCard/useRewardUsecase";
+import {
+	AddStampUseCaseInputData,
+	AddStampUseCaseInteractor,
+} from "~/server/application/usecase/stampCard/addStampUsecase";
 import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
 
 const stampCardRepository = new TrpcStampCardRepository();
@@ -35,6 +39,23 @@ export const stampCardRouter = createTRPCRouter({
 		.mutation(async ({ input }) => {
 			const useCase = new UseRewardUseCaseInteractor(stampCardRepository);
 			const inputData = new UseRewardUseCaseInputData(input.userId);
+			await useCase.execute(inputData);
+			return { success: true };
+		}),
+
+	addStamp: publicProcedure
+		.input(
+			z.object({
+				userId: z.string(),
+				productId: z.string(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			const useCase = new AddStampUseCaseInteractor(stampCardRepository);
+			const inputData = new AddStampUseCaseInputData(
+				input.userId,
+				input.productId,
+			);
 			await useCase.execute(inputData);
 			return { success: true };
 		}),
