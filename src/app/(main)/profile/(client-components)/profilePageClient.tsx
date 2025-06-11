@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
-import { Star } from "lucide-react";
+import { Star, UserRoundCogIcon } from "lucide-react";
 
 export default function ProfilePageClient() {
 	return (
@@ -10,7 +10,10 @@ export default function ProfilePageClient() {
 			<header className="bg-white shadow-sm border-b">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex justify-between items-center h-16">
-						<h1 className="text-2xl font-bold text-gray-900">マイページ</h1>
+						<h1 className="flex flex-row items-center gap-3 text-2xl font-bold text-gray-900">
+							<UserRoundCogIcon />
+							MyPage
+						</h1>
 						<a href="/" className="text-gray-600 hover:text-gray-900">
 							ホームに戻る
 						</a>
