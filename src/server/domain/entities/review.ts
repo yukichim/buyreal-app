@@ -20,9 +20,16 @@ export class ReviewEntity {
 	getId(): ReviewId {
 		return this.review.id;
 	}
+	getProductId(): string {
+		return this.review.productId;
+	}
 
 	getRating(): number {
 		return this.review.rating;
+	}
+
+	getSellerId(): string {
+		return this.review.sellerId;
 	}
 
 	getComment(): string {
@@ -31,6 +38,10 @@ export class ReviewEntity {
 
 	getProductTitle(): string {
 		return this.review.productTitle;
+	}
+
+	getBuyerId(): string {
+		return this.review.buyerId;
 	}
 
 	getBuyerName(): string {

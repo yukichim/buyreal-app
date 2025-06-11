@@ -1,43 +1,43 @@
-import { describe, expect, it, beforeEach, vi, afterEach } from 'vitest';
-import { stampCardRouter } from './stampCard';
-import { StampCardEntity } from '~/server/domain/entities/stampCardEntity';
-import { TrpcStampCardRepository } from '../repository/trpcStampCardRepository';
+import { describe, expect, it, beforeEach, vi, afterEach } from "vitest";
+import { stampCardRouter } from "./stampCard";
+import { StampCardEntity } from "~/server/domain/entities/stampCardEntity";
+import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
 
 // TrpcStampCardRepositoryをモック化
-vi.mock('../repository/trpcStampCardRepository');
+vi.mock("../repository/trpcStampCardRepository");
 
 const MockedTrpcStampCardRepository = vi.mocked(TrpcStampCardRepository);
 
-describe('StampCard Router Integration Tests', () => {
+describe("StampCard Router Integration Tests", () => {
 	let mockRepository: any;
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		
+
 		// リポジトリモックのリセット
 		MockedTrpcStampCardRepository.mockClear();
-		
+
 		// モックインスタンスの作成
 		mockRepository = {
 			getByUserId: vi.fn(),
 			save: vi.fn(),
 		};
-		
+
 		MockedTrpcStampCardRepository.mockImplementation(() => mockRepository);
 	});
 
-	describe('get endpoint', () => {
-		it('既存のスタンプカードを正常に取得する', async () => {
+	describe("get endpoint", () => {
+		it("既存のスタンプカードを正常に取得する", async () => {
 			// Arrange
-			const userId = 'user123';
+			const userId = "user123";
 			const mockStampCard = new StampCardEntity({
-				id: { value: 'stamp-id-123' },
+				id: { value: "stamp-id-123" },
 				userId: { value: userId },
 				stamps: 3,
 				totalPurchases: 3,
-				lastPurchaseDate: new Date('2024-01-15'),
-				createdAt: new Date('2024-01-01'),
-				updatedAt: new Date('2024-01-15'),
+				lastPurchaseDate: new Date("2024-01-15"),
+				createdAt: new Date("2024-01-01"),
+				updatedAt: new Date("2024-01-15"),
 			});
 
 			mockRepository.getByUserId.mockResolvedValue(mockStampCard);
@@ -49,20 +49,20 @@ describe('StampCard Router Integration Tests', () => {
 
 			// Assert
 			expect(result).toEqual({
-				id: { value: 'stamp-id-123' },
-				userId: { value: 'user123' },
+				id: { value: "stamp-id-123" },
+				userId: { value: "user123" },
 				stamps: 3,
 				totalPurchases: 3,
-				lastPurchaseDate: new Date('2024-01-15'),
-				createdAt: new Date('2024-01-01'),
-				updatedAt: new Date('2024-01-15'),
+				lastPurchaseDate: new Date("2024-01-15"),
+				createdAt: new Date("2024-01-01"),
+				updatedAt: new Date("2024-01-15"),
 			});
 			expect(mockRepository.getByUserId).toHaveBeenCalledWith(userId);
 		});
 
-		it('新規ユーザーのスタンプカード取得', async () => {
+		it("新規ユーザーのスタンプカード取得", async () => {
 			// Arrange
-			const userId = 'new-user-456';
+			const userId = "new-user-456";
 			mockRepository.getByUserId.mockResolvedValue(null);
 
 			// Act
@@ -75,44 +75,45 @@ describe('StampCard Router Integration Tests', () => {
 			expect(mockRepository.getByUserId).toHaveBeenCalledWith(userId);
 		});
 
-		it('無効なuserIdでエラーハンドリング', async () => {
+		it("無効なuserIdでエラーハンドリング", async () => {
 			// Arrange
-			const invalidUserId = '';
+			const invalidUserId = "";
 
 			// Act & Assert
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			await expect(caller.get({ userId: invalidUserId }))
-				.rejects
-				.toThrow();
+			await expect(caller.get({ userId: invalidUserId })).rejects.toThrow();
 		});
 
-		it('リポジトリエラー時の適切なエラーハンドリング', async () => {
+		it("リポジトリエラー時の適切なエラーハンドリング", async () => {
 			// Arrange
-			const userId = 'user123';
-			mockRepository.getByUserId.mockRejectedValue(new Error('Database connection error'));
+			const userId = "user123";
+			mockRepository.getByUserId.mockRejectedValue(
+				new Error("Database connection error"),
+			);
 
 			// Act & Assert
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			await expect(caller.get({ userId }))
-				.rejects
-				.toThrow('Database connection error');
+			await expect(caller.get({ userId })).rejects.toThrow(
+				"Database connection error",
+			);
 		});
 
-		it('複数のユーザーIDでの連続取得', async () => {
+		it("複数のユーザーIDでの連続取得", async () => {
 			// Arrange
-			const userIds = ['user1', 'user2', 'user3'];
-			const mockStampCards = userIds.map((userId, index) => 
-				new StampCardEntity({
-					id: { value: `stamp-${userId}` },
-					userId: { value: userId },
-					stamps: index + 1,
-					totalPurchases: index + 1,
-					lastPurchaseDate: new Date(),
-					createdAt: new Date(),
-					updatedAt: new Date(),
-				})
+			const userIds = ["user1", "user2", "user3"];
+			const mockStampCards = userIds.map(
+				(userId, index) =>
+					new StampCardEntity({
+						id: { value: `stamp-${userId}` },
+						userId: { value: userId },
+						stamps: index + 1,
+						totalPurchases: index + 1,
+						lastPurchaseDate: new Date(),
+						createdAt: new Date(),
+						updatedAt: new Date(),
+					}),
 			);
 
 			userIds.forEach((userId, index) => {
@@ -123,7 +124,7 @@ describe('StampCard Router Integration Tests', () => {
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
 			const results = await Promise.all(
-				userIds.map(userId => caller.get({ userId }))
+				userIds.map((userId) => caller.get({ userId })),
 			);
 
 			// Assert
@@ -134,12 +135,12 @@ describe('StampCard Router Integration Tests', () => {
 		});
 	});
 
-	describe('useReward endpoint', () => {
-		it('リワード使用を正常に実行する', async () => {
+	describe("useReward endpoint", () => {
+		it("リワード使用を正常に実行する", async () => {
 			// Arrange
-			const userId = 'user123';
+			const userId = "user123";
 			const mockStampCard = new StampCardEntity({
-				id: { value: 'stamp-id-123' },
+				id: { value: "stamp-id-123" },
 				userId: { value: userId },
 				stamps: 10, // リワードを受け取れる数
 				totalPurchases: 10,
@@ -162,11 +163,11 @@ describe('StampCard Router Integration Tests', () => {
 			expect(mockRepository.save).toHaveBeenCalled();
 		});
 
-		it('スタンプが不足している場合のエラーハンドリング', async () => {
+		it("スタンプが不足している場合のエラーハンドリング", async () => {
 			// Arrange
-			const userId = 'user123';
+			const userId = "user123";
 			const mockStampCard = new StampCardEntity({
-				id: { value: 'stamp-id-123' },
+				id: { value: "stamp-id-123" },
 				userId: { value: userId },
 				stamps: 5, // 不足
 				totalPurchases: 5,
@@ -180,32 +181,32 @@ describe('StampCard Router Integration Tests', () => {
 			// Act & Assert
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			await expect(caller.useReward({ userId }))
-				.rejects
-				.toThrow('スタンプが足りません');
+			await expect(caller.useReward({ userId })).rejects.toThrow(
+				"スタンプが足りません",
+			);
 		});
 
-		it('存在しないユーザーのリワード使用', async () => {
+		it("存在しないユーザーのリワード使用", async () => {
 			// Arrange
-			const userId = 'nonexistent-user';
+			const userId = "nonexistent-user";
 			mockRepository.getByUserId.mockResolvedValue(null);
 
 			// Act & Assert
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			await expect(caller.useReward({ userId }))
-				.rejects
-				.toThrow('StampCard not found');
+			await expect(caller.useReward({ userId })).rejects.toThrow(
+				"StampCard not found",
+			);
 		});
 	});
 
-	describe('addStamp endpoint', () => {
-		it('スタンプを正常に追加する', async () => {
+	describe("addStamp endpoint", () => {
+		it("スタンプを正常に追加する", async () => {
 			// Arrange
-			const userId = 'user123';
-			const productId = 'product456';
+			const userId = "user123";
+			const productId = "product456";
 			const mockStampCard = new StampCardEntity({
-				id: { value: 'stamp-id-123' },
+				id: { value: "stamp-id-123" },
 				userId: { value: userId },
 				stamps: 2,
 				totalPurchases: 2,
@@ -228,10 +229,10 @@ describe('StampCard Router Integration Tests', () => {
 			expect(mockRepository.save).toHaveBeenCalled();
 		});
 
-		it('新規ユーザーのスタンプカード作成とスタンプ追加', async () => {
+		it("新規ユーザーのスタンプカード作成とスタンプ追加", async () => {
 			// Arrange
-			const userId = 'new-user';
-			const productId = 'product789';
+			const userId = "new-user";
+			const productId = "product789";
 
 			mockRepository.getByUserId.mockResolvedValue(null);
 			mockRepository.save.mockResolvedValue(undefined);
@@ -247,31 +248,37 @@ describe('StampCard Router Integration Tests', () => {
 			expect(mockRepository.save).toHaveBeenCalled();
 		});
 
-		it('無効な入力パラメータのエラーハンドリング', async () => {
+		it("無効な入力パラメータのエラーハンドリング", async () => {
 			// Act & Assert
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			
+
 			// 空のuserIdでテスト
-			await expect(caller.addStamp({ userId: '', productId: 'product1' }))
-				.rejects
-				.toThrow();
+			await expect(
+				caller.addStamp({ userId: "", productId: "product1" }),
+			).rejects.toThrow();
 
 			// 空のproductIdでテスト
-			await expect(caller.addStamp({ userId: 'user1', productId: '' }))
-				.rejects
-				.toThrow();
+			await expect(
+				caller.addStamp({ userId: "user1", productId: "" }),
+			).rejects.toThrow();
 		});
 	});
 
-	describe('エンドポイント間の相互作用テスト', () => {
-		it('スタンプ追加→取得→リワード使用の完全フロー', async () => {
+	describe("エンドポイント間の相互作用テスト", () => {
+		it("スタンプ追加→取得→リワード使用の完全フロー", async () => {
 			// Arrange
-			const userId = 'user123';
-			const productIds = ['product1', 'product2', 'product3', 'product4', 'product5'];
-			
+			const userId = "user123";
+			const productIds = [
+				"product1",
+				"product2",
+				"product3",
+				"product4",
+				"product5",
+			];
+
 			let mockStampCard = new StampCardEntity({
-				id: { value: 'stamp-id-123' },
+				id: { value: "stamp-id-123" },
 				userId: { value: userId },
 				stamps: 0,
 				totalPurchases: 0,
@@ -280,8 +287,8 @@ describe('StampCard Router Integration Tests', () => {
 				updatedAt: new Date(),
 			});
 
-			mockRepository.getByUserId.mockImplementation(() => 
-				Promise.resolve(mockStampCard)
+			mockRepository.getByUserId.mockImplementation(() =>
+				Promise.resolve(mockStampCard),
 			);
 			mockRepository.save.mockImplementation((stampCard: StampCardEntity) => {
 				mockStampCard = stampCard;
@@ -309,9 +316,9 @@ describe('StampCard Router Integration Tests', () => {
 			}
 		});
 
-		it('複数ユーザーの同時操作', async () => {
+		it("複数ユーザーの同時操作", async () => {
 			// Arrange
-			const userIds = ['user1', 'user2', 'user3'];
+			const userIds = ["user1", "user2", "user3"];
 			const stampCards = new Map();
 
 			mockRepository.getByUserId.mockImplementation((userId: string) => {
@@ -330,10 +337,10 @@ describe('StampCard Router Integration Tests', () => {
 			const operations = userIds.map(async (userId) => {
 				// 各ユーザーでスタンプ追加
 				await caller.addStamp({ userId, productId: `product-${userId}` });
-				
+
 				// スタンプカード取得
 				const stampCard = await caller.get({ userId });
-				
+
 				return { userId, stampCard };
 			});
 
@@ -347,26 +354,26 @@ describe('StampCard Router Integration Tests', () => {
 		});
 	});
 
-	describe('エッジケースとバリデーション', () => {
-		it('極端に長いuserIdの処理', async () => {
+	describe("エッジケースとバリデーション", () => {
+		it("極端に長いuserIdの処理", async () => {
 			// Arrange
-			const longUserId = 'a'.repeat(1000);
-			
+			const longUserId = "a".repeat(1000);
+
 			mockRepository.getByUserId.mockResolvedValue(null);
 
 			// Act & Assert
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			
+
 			// 通常のtRPCバリデーションでは問題ないはず
 			const result = await caller.get({ userId: longUserId });
 			expect(result).toBeNull();
 		});
 
-		it('特殊文字を含むIDの処理', async () => {
+		it("特殊文字を含むIDの処理", async () => {
 			// Arrange
-			const specialUserId = 'user@#$%^&*()_+-=[]{}|;:,.<>?';
-			const specialProductId = 'product!@#$%^&*()';
+			const specialUserId = "user@#$%^&*()_+-=[]{}|;:,.<>?";
+			const specialProductId = "product!@#$%^&*()";
 
 			mockRepository.getByUserId.mockResolvedValue(null);
 			mockRepository.save.mockResolvedValue(undefined);
@@ -374,19 +381,19 @@ describe('StampCard Router Integration Tests', () => {
 			// Act
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			const result = await caller.addStamp({ 
-				userId: specialUserId, 
-				productId: specialProductId 
+			const result = await caller.addStamp({
+				userId: specialUserId,
+				productId: specialProductId,
 			});
 
 			// Assert
 			expect(result).toEqual({ success: true });
 		});
 
-		it('Unicode文字を含むIDの処理', async () => {
+		it("Unicode文字を含むIDの処理", async () => {
 			// Arrange
-			const unicodeUserId = 'ユーザー123';
-			const unicodeProductId = '商品456';
+			const unicodeUserId = "ユーザー123";
+			const unicodeProductId = "商品456";
 
 			mockRepository.getByUserId.mockResolvedValue(null);
 			mockRepository.save.mockResolvedValue(undefined);
@@ -394,9 +401,9 @@ describe('StampCard Router Integration Tests', () => {
 			// Act
 			const ctx = { db: {} };
 			const caller = stampCardRouter.createCaller(ctx);
-			const result = await caller.addStamp({ 
-				userId: unicodeUserId, 
-				productId: unicodeProductId 
+			const result = await caller.addStamp({
+				userId: unicodeUserId,
+				productId: unicodeProductId,
 			});
 
 			// Assert

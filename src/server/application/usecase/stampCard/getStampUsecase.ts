@@ -2,9 +2,16 @@ import type { StampCardRepository } from "~/server/domain/repositories/stampCard
 import type { StampCardEntity } from "~/server/domain/entities/stampCardEntity";
 
 export class GetStampCardUseCaseInputData {
+	private unuseWords = [" ", "  ", "\t", "\n", "\r\n"];
 	constructor(private userId: string) {
 		if (!userId) {
 			throw new Error("userID is invalid.");
+		}
+
+		for (const i of this.unuseWords) {
+			if (userId.includes(i)) {
+				throw new Error("userID is invalid.");
+			}
 		}
 	}
 

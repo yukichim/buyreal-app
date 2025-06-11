@@ -9,7 +9,7 @@ import {
 	UseRewardUseCaseInteractor,
 } from "~/server/application/usecase/stampCard/useRewardUsecase";
 import {
-	AddStampUseCaseInputData,
+	addStampUseCaseInputData,
 	AddStampUseCaseInteractor,
 } from "~/server/application/usecase/stampCard/addStampUsecase";
 import { TrpcStampCardRepository } from "../repository/trpcStampCardRepository";
@@ -52,11 +52,8 @@ export const stampCardRouter = createTRPCRouter({
 		)
 		.mutation(async ({ input }) => {
 			const useCase = new AddStampUseCaseInteractor(stampCardRepository);
-			const inputData = new AddStampUseCaseInputData(
-				input.userId,
-				input.productId,
-			);
-			await useCase.execute(inputData);
+			const inputData = new addStampUseCaseInputData(input.userId);
+			await useCase.execute(inputData.UserId);
 			return { success: true };
 		}),
 });
